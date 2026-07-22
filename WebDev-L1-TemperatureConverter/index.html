@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon: #6B1E3C;
+    --maroon-deep: #4A1329;
+    --charcoal: #3A3235;
+    --pink: #F3C6D6;
+    --pink-soft: #FBEAF0;
+    --rose: #C97A93;
+    --ivory: #F7F3F2;
+    --white: #FFFDFC;
+    --error: #B3261E;
+    --error-bg: #FBEAEA;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    font-family: 'Jost', sans-serif;
+    color: var(--charcoal);
+    background: linear-gradient(135deg, var(--pink-soft) 0%, var(--ivory) 55%, var(--ivory) 100%);
+    min-height: 100vh;
+    display:flex;
+    flex-direction: column;
+  }
+
+  header{ padding: 26px 32px; text-align:center; }
+  .logo{ font-family:'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--maroon-deep); }
+  .logo span{ color: var(--rose); }
+
+  main{
+    flex: 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 20px 20px 60px;
+  }
+
+  .card{
+    background: var(--white);
+    width: 100%;
+    max-width: 460px;
+    border-radius: 22px;
+    padding: 42px 38px 38px;
+    box-shadow: 0 30px 60px -30px rgba(107,30,60,0.35);
+    border: 1px solid rgba(107,30,60,0.08);
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--rose);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align:center;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    color: var(--maroon-deep);
+    text-align:center;
+    margin-bottom: 8px;
+  }
+
+  .subtitle{
+    text-align:center;
+    font-size: 0.9rem;
+    color: #6b5d61;
+    margin-bottom: 32px;
+  }
+
+  label{
+    display:block;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--maroon-deep);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .input-group{ margin-bottom: 22px; }
+
+  input[type="text"]{
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid rgba(107,30,60,0.18);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    background: var(--ivory);
+    transition: border-color 0.2s ease;
+  }
+  input[type="text"]:focus{
+    outline: none;
+    border-color: var(--maroon);
+    background: var(--white);
+  }
+  input[type="text"].invalid{
+    border-color: var(--error);
+    background: var(--error-bg);
+  }
+
+  .unit-row{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 26px;
+  }
+
+  select{
+    width: 100%;
+    padding: 13px 14px;
+    border: 1.5px solid rgba(107,30,60,0.18);
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    background: var(--ivory);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  select:focus{ outline:none; border-color: var(--maroon); }
+
+  .swap-btn{
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(107,30,60,0.18);
+    background: var(--pink-soft);
+    color: var(--maroon-deep);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition: all 0.25s ease;
+    margin-bottom: 1px;
+  }
+  .swap-btn:hover{ background: var(--maroon-deep); color: var(--white); transform: rotate(180deg); }
+
+  .convert-btn{
+    width: 100%;
+    background: var(--maroon-deep);
+    color: var(--white);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    margin-bottom: 22px;
+  }
+  .convert-btn:hover{ background: var(--rose); }
+
+  .error-msg{
+    display:none;
+    background: var(--error-bg);
+    border: 1px solid rgba(179,38,30,0.25);
+    color: var(--error);
+    font-size: 0.85rem;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  .error-msg.show{ display:block; }
+
+  .result-box{
+    display:none;
+    background: var(--maroon-deep);
+    border-radius: 16px;
+    padding: 26px 24px;
+    text-align:center;
+  }
+  .result-box.show{ display:block; }
+
+  .result-value{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .result-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--pink);
+    letter-spacing: 0.03em;
+  }
+
+  .other-units{
+    display:flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(255,255,255,0.2);
+  }
+  .other-units div{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .other-units span{ color: var(--pink); }
+
+  footer{ text-align:center; padding: 24px; font-size: 0.8rem; color: #8a7b7f; }
+
+  @media (max-width: 480px){
+    .card{ padding: 32px 24px 30px; }
+    .unit-row{ grid-template-columns: 1fr; }
+    .swap-btn{ justify-self: center; margin: -6px 0; transform: rotate(90deg); }
+    .swap-btn:hover{ transform: rotate(270deg); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo"><span>Kylore Tools</span></a>
+</header>
+
+<main>
+  <div class="card">
+    <div class="eyebrow">UNIT CONVERSION</div>
+    <h1>Temperature Converter</h1>
+    <p class="subtitle">Convert between Celsius, Fahrenheit, and Kelvin instantly.</p>
+
+    <div class="input-group">
+      <label for="tempInput">Temperature Value</label>
+      <input type="text" id="tempInput" placeholder="e.g. 25" inputmode="decimal">
+    </div>
+
+    <div class="unit-row">
+      <div>
+        <label for="fromUnit">From</label>
+        <select id="fromUnit">
+          <option value="C">Celsius (°C)</option>
+          <option value="F">Fahrenheit (°F)</option>
+          <option value="K">Kelvin (K)</option>
+        </select>
+      </div>
+      <button class="swap-btn" id="swapBtn" type="button" title="Swap units" aria-label="Swap units">⇄</button>
+      <div>
+        <label for="toUnit">To</label>
+        <select id="toUnit">
+          <option value="F">Fahrenheit (°F)</option>
+          <option value="C">Celsius (°C)</option>
+          <option value="K">Kelvin (K)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="convert-btn" id="convertBtn" type="button">Convert</button>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-value" id="resultValue">--</div>
+      <div class="result-label" id="resultLabel">Result</div>
+      <div class="other-units" id="otherUnits"></div>
+    </div>
+  </div>
+</main>
+
+<footer>Web Development Internship — Level 1, Task 3 · #oasisinfobyte</footer>
+
+<script>
+  const tempInput   = document.getElementById('tempInput');
+  const fromUnitSel = document.getElementById('fromUnit');
+  const toUnitSel   = document.getElementById('toUnit');
+  const convertBtn  = document.getElementById('convertBtn');
+  const swapBtn     = document.getElementById('swapBtn');
+  const errorMsg    = document.getElementById('errorMsg');
+  const resultBox   = document.getElementById('resultBox');
+  const resultValue = document.getElementById('resultValue');
+  const resultLabel = document.getElementById('resultLabel');
+  const otherUnits  = document.getElementById('otherUnits');
+
+  const UNIT_SYMBOLS = { C: '°C', F: '°F', K: 'K' };
+  const UNIT_NAMES   = { C: 'Celsius', F: 'Fahrenheit', K: 'Kelvin' };
+  const ABSOLUTE_ZERO_C = -273.15;
+
+  function toCelsius(value, unit){
+    if(unit === 'C') return value;
+    if(unit === 'F') return (value - 32) * 5/9;
+    if(unit === 'K') return value - 273.15;
+  }
+
+  function fromCelsius(celsius, unit){
+    if(unit === 'C') return celsius;
+    if(unit === 'F') return celsius * 9/5 + 32;
+    if(unit === 'K') return celsius + 273.15;
+  }
+
+  function showError(message){
+    errorMsg.textContent = message;
+    errorMsg.classList.add('show');
+    resultBox.classList.remove('show');
+    tempInput.classList.add('invalid');
+  }
+
+  function clearError(){
+    errorMsg.classList.remove('show');
+    errorMsg.textContent = '';
+    tempInput.classList.remove('invalid');
+  }
+
+  function handleConvert(){
+    clearError();
+
+    const rawValue = tempInput.value.trim();
+    const fromUnit = fromUnitSel.value;
+    const toUnit   = toUnitSel.value;
+
+    // Validation: empty input
+    if(rawValue === ''){
+      showError('Please enter a temperature value.');
+      return;
+    }
+
+    // Validation: must be a valid number (allows negatives, decimals)
+    if(!/^-?\d+(\.\d+)?$/.test(rawValue)){
+      showError('Please enter a valid number (e.g. 25, -10, 98.6).');
+      return;
+    }
+
+    const value = parseFloat(rawValue);
+
+    // Convert to Celsius as a common base
+    const celsiusValue = toCelsius(value, fromUnit);
+
+    // Absolute zero edge case: nothing can be colder than -273.15°C
+    if(celsiusValue < ABSOLUTE_ZERO_C - 1e-9){
+      showError(`That's below absolute zero (-273.15°C / -459.67°F / 0K) — not physically possible.`);
+      return;
+    }
+
+    const result = fromCelsius(celsiusValue, toUnit);
+    const rounded = Math.round(result * 100) / 100;
+
+    resultValue.textContent = `${rounded}${UNIT_SYMBOLS[toUnit]}`;
+    resultLabel.textContent = `${value}${UNIT_SYMBOLS[fromUnit]} (${UNIT_NAMES[fromUnit]}) → ${UNIT_NAMES[toUnit]}`;
+
+    // Show equivalents in the other two units too
+    const allUnits = ['C', 'F', 'K'];
+    otherUnits.innerHTML = '';
+    allUnits.forEach(u => {
+      if(u === toUnit) return;
+      const v = Math.round(fromCelsius(celsiusValue, u) * 100) / 100;
+      const div = document.createElement('div');
+      div.innerHTML = `${UNIT_NAMES[u]}: <span>${v}${UNIT_SYMBOLS[u]}</span>`;
+      otherUnits.appendChild(div);
+    });
+
+    resultBox.classList.add('show');
+  }
+
+  function handleSwap(){
+    const temp = fromUnitSel.value;
+    fromUnitSel.value = toUnitSel.value;
+    toUnitSel.value = temp;
+    if(resultBox.classList.contains('show')) handleConvert();
+  }
+
+  convertBtn.addEventListener('click', handleConvert);
+  swapBtn.addEventListener('click', handleSwap);
+  tempInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') handleConvert();
+  });
+  tempInput.addEventListener('input', clearError);
+</script>
+
+</body>
+</html>
