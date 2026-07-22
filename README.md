@@ -58,7 +58,7 @@ DESKTOP SCREENSHOT
 ## 🔗 Links
 
 - Demo video: [LinkedIn post link here]
-- Live preview (if hosted): [GitHub Pages link here]
+- Live preview (if hosted): https://github.com/Puleng-Kay
 
 ## 🙏 Acknowledgements
 
