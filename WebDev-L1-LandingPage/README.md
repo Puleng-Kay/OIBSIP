@@ -55,10 +55,9 @@ DESKTOP SCREENSHOT
 ![alt text]({BED98CAC-DFDA-4A87-8033-96F467A80B7B}.png)
 ![alt text]({FBDA11ED-77DF-4FB1-8A46-9D8D5F587B60}.png)
 ![alt text]({67D93E07-A9A6-4931-9425-0ADC6BA895AF}.png)
-## 🔗 Links
 
-- Demo video: [LinkedIn post link here]
-- Live preview (if hosted): https://github.com/Puleng-Kay
+## 🔗 Links
+- Live preview (if hosted): http://127.0.0.1:5500/index.html
 
 ## 🙏 Acknowledgements
 
