@@ -59,9 +59,7 @@ WebDev-L1-PersonalPortfolio/
 ![alt text]({84EE1779-F545-42F7-A61E-166BE8CE1BB8}.png)
 
 ## 🔗 Links
-
-- Demo video: [LinkedIn post link here]
-- Live preview (if hosted): [GitHub Pages link here]
+- Live preview (if hosted): http://127.0.0.1:5500/index.html
 
 ## 🙏 Acknowledgements
 
