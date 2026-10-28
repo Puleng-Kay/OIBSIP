@@ -61,9 +61,7 @@ WebDev-L1-TemperatureConverter/
 ![alt text]({740E7FBA-94E5-465B-846A-F9A25873E814}.png)
 
 ## 🔗 Links
-
-- Demo video: [LinkedIn post link here]
-- Live preview (if hosted): [GitHub Pages link here]
+- Live preview (if hosted): (http://127.0.0.1:5500/WebDev-L1-TemperatureConverter/index.html)
 
 ## 🙏 Acknowledgements
 
